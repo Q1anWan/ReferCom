@@ -1,0 +1,128 @@
+<?xml version="1.0"?>
+<!-- Author: qianwan -->
+<!-- Date:  2023/12/12 -->
+<mavlink>
+	<version>3</version>
+
+	<enums>
+		<!-- Component ID-->
+		<enum name="REF_COMPONENT_ID">
+			<description>Component ID.</description>
+			<entry value="0" name="REF_COMPONENT_ID_SERVER">
+				<description>Referee server.</description>
+			</entry>
+			<entry value="1" name="REF_COMPONENT_ID_X_FISHMONGER_A">
+				<description>Team X Fishmonger.</description>
+			</entry>
+			<entry value="2" name="REF_COMPONENT_ID_X_FISHMONGER_B">
+				<description>Team Y Fishmonger.</description>
+			</entry>
+			<entry value="3" name="REF_COMPONENT_ID_Y_FISHMONGER_A">
+				<description>Team X Fishmonger.</description>
+			</entry>
+			<entry value="4" name="REF_COMPONENT_ID_Y_FISHMONGER_B">
+				<description>Team Y Fishmonger.</description>
+			</entry>
+			<entry value="5" name="REF_COMPONENT_ID_FISHPOND">
+				<description>Fish pond.</description>
+			</entry>
+		</enum>
+		<!-- Error code -->
+		<enum name="REF_ERROR_CODE">
+			<description>Error codes of component.</description>
+			<entry value="0" name="REF_ERROR_NONE">
+				<description>STOP State.</description>
+			</entry>
+			<entry value="1" name="REF_ERROR_COMMUNICATION">
+				<description>Communication is error.</description>
+			</entry>
+			<entry value="2" name="REF_ERROR_CV">
+				<description>Computer vision is error.</description>
+			</entry>
+			<entry value="3" name="REF_ERROR_BATTERY">
+				<description>Battery is going to run out.</description>
+			</entry>
+		</enum>
+		<!-- Fishmonger state machine -->
+		<enum name="REF_FISHMONGER_STATE">
+			<description>State machine of fishmonger.</description>
+			<entry value="0" name="REF_FISHMONGER_STATE_STOP">
+				<description>STOP State.</description>
+			</entry>
+			<entry value="1" name="REF_FISHMONGER_STATE_SCANNING">
+				<description>Fishmonger is waiting for the fish.</description>
+			</entry>
+			<entry value="2" name="REF_FISHMONGER_STATE_COOLING">
+				<description>Fishmonger is cooling.</description>
+			</entry>
+			<entry value="3" name="REF_FISHMONGER_STATE_TRIGGERED">
+				<description>Fishmonger triggered by fish.</description>
+			</entry>
+		</enum>
+		<!-- Fish pond state machine -->
+		<enum name="REF_FISHPOND_STATE">
+			<description>State machine of fish pond.</description>
+			<entry value="0" name="REF_FISHPOND_STATE_STOP">
+				<description>STOP State.</description>
+			</entry>
+			<entry value="1" name="REF_FISHPOND_STATE_NORMAL">
+				<description>Fish pond is normal and stable.</description>
+			</entry>
+			<entry value="2" name="REF_FISHPOND_STATE_RELEASE">
+				<description>Fish pond will release a box of fish.</description>
+			</entry>
+			<entry value="3" name="REF_FISHPOND_STATE_CLEAN">
+				<description>Fish pond will turn the table over.</description>
+			</entry>
+		</enum>
+		<!-- Fish pond state machine -->
+		<enum name="REF_FISH_TYPE">
+			<description>Fish types.</description>
+			<entry value="0" name="REF_FISH_RED">
+				<description>Red fish.</description>
+			</entry>
+			<entry value="1" name="REF_FISH_ORANGE">
+				<description>Orange fish.</description>
+			</entry>
+			<entry value="2" name="REF_FISH_YELLOW">
+				<description>Yellow fish.</description>
+			</entry>
+			<entry value="3" name="REF_FISH_GREEN">
+				<description>Green fish.</description>
+			</entry>
+			<entry value="4" name="REF_FISH_BLUE">
+				<description>Blue fish.</description>
+			</entry>
+		</enum>
+	</enums>
+
+	<messages>
+		<!-- Heart beat from server. -->
+		<message id="0" name="SERVER_HEARTBEAT">
+			<description>Indicate referee server is alive.</description>
+			<field type="uint32_t" name="pack_count">Indicate id of heartbeat. First pack is 0.</field>
+		</message>
+		<!-- Set a conponent's new state. -->
+		<message id="2" name="SET_CONPONENT_STATE">
+			<description>Set component state with a paramater.</description>
+			<field type="uint8_t" name="component" enum="REF_COMPONENT_ID">Indicate the component need to be set.</field>
+			<field type="uint8_t" name="new_state">Indicate new state</field>
+			<field type="uint8_t" name="parameter" default="0" invalid="0">Auxiliary parameters</field>
+		</message>
+		<!-- Heart beat from component -->
+		<message id="3" name="COMPONENT_HEARTBEAT">
+			<description>Indicate component is alive.</description>
+			<field type="uint8_t" name="state">Indicate the state of now.</field>
+			<field type="uint8_t" name="error_code" default="0" enum="REF_ERROR_CODE">Indicate error code.</field>
+			<field type="uint16_t" name="battery_voltage" units="mV">Indicate voltage of battery.</field>
+			<field type="uint32_t" name="pack_count">Indicate id of heartbeat. First pack is 0.</field>
+		</message>
+		<!-- Fishmonger find a fish -->
+		<message id="4" name="FISHMONGER_FIND_FISH">
+			<description>Indicate fish man find a fish.</description>
+			<field type="uint8_t" name="component" enum="REF_COMPONENT_ID">Indicate which fishmonger.</field>
+			<field type="uint8_t" name="fish_type" enum="REF_FISH_TYPE">Indicate the type of the fish.</field>
+			<field type="uint16_t" name="pack_count">Indicate how many same packs have been sent since fishmonger is at TRIGGERED. First pack is 0.</field>
+		</message>
+	</messages>
+</mavlink>
