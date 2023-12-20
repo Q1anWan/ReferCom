@@ -10,7 +10,7 @@
     #error Wrong include order: MAVLINK_REFERCOM.H MUST NOT BE DIRECTLY USED. Include mavlink.h from the same directory instead or set ALL AND EVERY defines from MAVLINK.H manually accordingly, including the #define MAVLINK_H call.
 #endif
 
-#define MAVLINK_REFERCOM_XML_HASH -679473794567741764
+#define MAVLINK_REFERCOM_XML_HASH 8252630130480296175
 
 #ifdef __cplusplus
 extern "C" {
@@ -38,13 +38,13 @@ extern "C" {
 #define HAVE_ENUM_REF_COMPONENT_ID
 typedef enum REF_COMPONENT_ID
 {
-   REF_COMPONENT_ID_SERVER=0, /* Referee server. | */
-   REF_COMPONENT_ID_X_FISHMONGER_A=1, /* Team X Fishmonger. | */
-   REF_COMPONENT_ID_X_FISHMONGER_B=2, /* Team Y Fishmonger. | */
-   REF_COMPONENT_ID_Y_FISHMONGER_A=3, /* Team X Fishmonger. | */
-   REF_COMPONENT_ID_Y_FISHMONGER_B=4, /* Team Y Fishmonger. | */
-   REF_COMPONENT_ID_FISHPOND=5, /* Fish pond. | */
-   REF_COMPONENT_ID_ENUM_END=6, /*  | */
+   REF_COMPONENT_ID_SERVER=1, /* Referee server. | */
+   REF_COMPONENT_ID_X_FISHMONGER_A=2, /* Team X Fishmonger. | */
+   REF_COMPONENT_ID_X_FISHMONGER_B=3, /* Team Y Fishmonger. | */
+   REF_COMPONENT_ID_Y_FISHMONGER_A=4, /* Team X Fishmonger. | */
+   REF_COMPONENT_ID_Y_FISHMONGER_B=5, /* Team Y Fishmonger. | */
+   REF_COMPONENT_ID_FISHPOND=6, /* Fish pond. | */
+   REF_COMPONENT_ID_ENUM_END=7, /*  | */
 } REF_COMPONENT_ID;
 #endif
 

@@ -1,11 +1,25 @@
 # Referee System Protocol
-     
+*深圳科创学院2024高中生机器人冬令营 裁判系统通讯系统*   
+*InnoxSZ 2024 Robotics Winter Camp of High School Students.* 
 This submodule is the protocol of Referee System. Based on Mavlink v2.    
-*InnoxSZ 2024 Winter Camp of High School Students.*  
 Author: qianwan.Jin   
+
+>Version: 1.1   
+Generate Date: 2023/12/20     
+Description: Fix system component ID overun
+
 >Version: 1.0   
 Generate Date: 2023/12/13     
 Description: Creat this protocol  
+
+- [Referee System Protocol](#referee-system-protocol)
+  - [Enum](#enum)
+  - [Message](#message)
+      - [Overall](#overall)
+      - [Elaborate](#elaborate)
+  - [Sample](#sample)
+      - [Logic](#logic)
+      - [Sample C code](#sample-c-code)
 
 ## Enum
 - **REF_COMPONENT_ID**   
@@ -14,12 +28,12 @@ Description: Creat this protocol
 
   | Name                            | ID  | Description        |
   | ------------------------------- | --- | ------------------ |
-  | REF_COMPONENT_ID_SERVER         | 0   | Referee server.    |
-  | REF_COMPONENT_ID_X_FISHMONGER_A | 1   | Team X Fishmonger. |
-  | REF_COMPONENT_ID_X_FISHMONGER_B | 2   | Team Y Fishmonger. |
-  | REF_COMPONENT_ID_Y_FISHMONGER_A | 3   | Team X Fishmonger. |
-  | REF_COMPONENT_ID_Y_FISHMONGER_B | 4   | Team Y Fishmonger. |
-  | REF_COMPONENT_ID_FISHPOND       | 5   | Fish pond.         |
+  | REF_COMPONENT_ID_SERVER         | 1   | Referee server.    |
+  | REF_COMPONENT_ID_X_FISHMONGER_A | 2   | Team X Fishmonger. |
+  | REF_COMPONENT_ID_X_FISHMONGER_B | 3   | Team Y Fishmonger. |
+  | REF_COMPONENT_ID_Y_FISHMONGER_A | 4   | Team X Fishmonger. |
+  | REF_COMPONENT_ID_Y_FISHMONGER_B | 5   | Team Y Fishmonger. |
+  | REF_COMPONENT_ID_FISHPOND       | 6   | Fish pond.         |
 
 - **REF_ERROR_CODE**   
   Error codes of component.

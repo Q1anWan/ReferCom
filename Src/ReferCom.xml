@@ -1,6 +1,6 @@
-<?xml version="1.0"?>
+<?xml version="1.1"?>
 <!-- Author: qianwan -->
-<!-- Date:  2023/12/12 -->
+<!-- Date:  2023/12/20 -->
 <mavlink>
 	<version>3</version>
 
@@ -8,22 +8,22 @@
 		<!-- Component ID-->
 		<enum name="REF_COMPONENT_ID">
 			<description>Component ID.</description>
-			<entry value="0" name="REF_COMPONENT_ID_SERVER">
+			<entry value="1" name="REF_COMPONENT_ID_SERVER">
 				<description>Referee server.</description>
 			</entry>
-			<entry value="1" name="REF_COMPONENT_ID_X_FISHMONGER_A">
+			<entry value="2" name="REF_COMPONENT_ID_X_FISHMONGER_A">
 				<description>Team X Fishmonger.</description>
 			</entry>
-			<entry value="2" name="REF_COMPONENT_ID_X_FISHMONGER_B">
+			<entry value="3" name="REF_COMPONENT_ID_X_FISHMONGER_B">
 				<description>Team Y Fishmonger.</description>
 			</entry>
-			<entry value="3" name="REF_COMPONENT_ID_Y_FISHMONGER_A">
+			<entry value="4" name="REF_COMPONENT_ID_Y_FISHMONGER_A">
 				<description>Team X Fishmonger.</description>
 			</entry>
-			<entry value="4" name="REF_COMPONENT_ID_Y_FISHMONGER_B">
+			<entry value="5" name="REF_COMPONENT_ID_Y_FISHMONGER_B">
 				<description>Team Y Fishmonger.</description>
 			</entry>
-			<entry value="5" name="REF_COMPONENT_ID_FISHPOND">
+			<entry value="6" name="REF_COMPONENT_ID_FISHPOND">
 				<description>Fish pond.</description>
 			</entry>
 		</enum>
