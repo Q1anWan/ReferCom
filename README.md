@@ -1,10 +1,14 @@
-# Referee System Protocol
+ # Referee System Protocol
 *深圳科创学院2024高中生机器人冬令营 裁判系统通讯系统*   
-*InnoxSZ 2024 Robotics Winter Camp of High School Students.* 
+*InnoxSZ 2024 Robotics Winter Camp for High School Students.* 
 This submodule is the protocol of Referee System. Based on Mavlink v2.    
 Author: qianwan.Jin   
 
->Version: 1.1   
+>Version: 4   
+Generate Date: 2024/01/22     
+Description: Adding machine Feeding Table and change ID
+
+>Version: 3   
 Generate Date: 2023/12/20     
 Description: Fix system component ID overun
 
@@ -61,6 +65,15 @@ Description: Creat this protocol
   | REF_FISHPOND_STATE_NORMAL  | 1   | Fish pond is normal and stable.       |
   | REF_FISHPOND_STATE_RELEASE | 2   | Fish pond will release a box of fish. |
   | REF_FISHPOND_STATE_CLEAN   | 3   | Fish pond will turn the table over.   |
+
+- **REF_FEEDINGTABLE_STATE**   
+  State machine of feed table.
+  | Name                       | ID  | Description                           |
+  | -------------------------- | --- | ------------------------------------- |
+  | REF_FEEDINGTABLE_STATE_STOP    | 0   | STOP State.                           |
+  | REF_FEEDINGTABLE_STATE_NORMAL  | 1   | Feeding table is normal and stable.       |
+  | REF_FEEDINGTABLE_STATE_RELEASE | 2   | Feeding table is releasig new fish feed. |
+  | REF_FEEDINGTABLE_STATE_CLEAN   | 3   | Feeding table is turning the table over.   |
 
 - **REF_FISH_TYPE**   
   Fish types.
@@ -130,12 +143,18 @@ Description: Creat this protocol
   1. Server send **server_heartbeat** 
   2. Components return **component_heartbeat** after received **server_heartbeat**.
 
+---
+
 - When server ask fishpond stop
   1. Server send **set_component_state** to fishpond with REF_FISHPOND_STATE_STOP.
   2. Components return **component_heartbeat** with state REF_FISHPOND_STATE_STOP after received **set_component_state**.
+  
+- When server ask fishpond get into fixing mode
+  1. Server send **set_component_state** to fishpond with REF_FISHPOND_STATE_FIXING.
+  2. Components return **component_heartbeat** with state REF_FISHPOND_STATE_FIXING after received **set_component_state**.
    
 - When server ask fishpond release
-  1. Server send **set_component_state** to fishpond with REF_FISHPOND_STATE_RELEASE and parameter of box ID.
+  1. Server send **set_component_state** to fishpond with REF_FISHPOND_STATE_RELEASE and parameter filled with box ID(1-6 indicates rotate 60 degree to 360 degree, counter-closewise).
   2. Components return **component_heartbeat** with state REF_FISHPOND_STATE_RELEASE after received **set_component_state**.
   3. Components return **component_heartbeat** with REF_FISHPOND_STATE_NORMAL after releasing. 
    
@@ -144,10 +163,36 @@ Description: Creat this protocol
   2. Components return **component_heartbeat** with state REF_FISHPOND_STATE_RELEASE after received **set_component_state**.
   3. Components return **component_heartbeat** with REF_FISHPOND_STATE_NORMAL after cleaning.
 
+---
+
+- When server ask feeding table stop
+  1. Server send **set_component_state** to feeding table with REF_FEEDINGTABLE_STATE_STOP.
+  2. Components return **component_heartbeat** with state REF_FEEDINGTABLE_STATE_STOP after received **set_component_state**.
+  
+- When server ask feeding table get into fixing mode
+  1. Server send **set_component_state** to feeding table with REF_FEEDINGTABLE_STATE_FIXING.
+  2. Components return **component_heartbeat** with state REF_FEEDINGTABLE_STATE_FIXING after received **set_component_state**.
+   
+- When server ask feeding table release
+  1. Server send **set_component_state** to feeding table with REF_FEEDINGTABLE_STATE_RELEASE and parameter filled with box ID(1-3 indicates RELEASE 1 to 3 boxes).
+  2. Components return **component_heartbeat** with state REF_FEEDINGTABLE_STATE_RELEASE after received **set_component_state**.
+  3. Components return **component_heartbeat** with REFFEEDINGTABLE_STATE_NORMAL after releasing. 
+   
+- When server ask feeding table clean
+  1. Server send **set_component_state** to feeding table with REF_FEEDINGTABLE_STATE_RELEASE.
+  2. Components return **component_heartbeat** with state REF_FEEDINGTABLE_STATE_RELEASE after received **set_component_state**.
+  3. Components return **component_heartbeat** with REF_FEEDINGTABLE_STATE_NORMAL after cleaning.
+
+---
+
 - When server ask fishmonger stop
   1. Server send **set_component_state** to fishmonger with REF_FISHMONGER_STATE_STOP.
   2. Components return **component_heartbeat** with state REF_FISHMONGER_STATE_STOP after received **set_component_state**.
    
+- When server ask fishmonger get into fixing mode
+  1. Server send **set_component_state** to fishmonger with REF_FISHMONGER_STATE_FIXING.
+  2. Components return **component_heartbeat** with state REF_FISHMONGER_STATE_FIXING after received **set_component_state**.
+
 - When server ask fishmonger start scanning 
   1. Server send **set_component_state** to fishmonger with REF_FISHMONGER_STATE_SCANNING.
   2. Components return **component_heartbeat** with state REF_FISHMONGER_STATE_SCANNING after received **set_component_state**.
@@ -157,9 +202,11 @@ Description: Creat this protocol
   2. Fishmonger send **component_heartbeat** to fishmonger with REF_FISHMONGER_STATE_TRIGGERED. 
   3. Fishmonger send **fishmonger_find_fish** to server with REF_FISH_TYPE periodically.
 
-- When server know fishmonger find a fish and ask it get into cooling
+- When server realize fishmonger find a fish and ask it get into cooling
   1. Server send **set_component_state** to fishmonger with REF_FISHMONGER_STATE_COOLING.
   2. Components return **component_heartbeat** with state REF_FISHMONGER_STATE_COOLING after received **set_component_state**.
+
+
 
 #### Sample C code
 

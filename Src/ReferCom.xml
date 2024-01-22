@@ -1,9 +1,11 @@
-<?xml version="1.1"?>
-<!-- Author: qianwan -->
-<!-- Date:  2023/12/20 -->
-<mavlink>
-	<version>3</version>
+<?xml version="1.0"?>
 
+<mavlink>
+	<version>4</version>
+	<!-- Author: qianwan -->
+	<!-- Adding Feeding table and change ID -->
+	<!-- Author: qianwan -->
+	<!-- 3 Date:  2023/12/20 -->
 	<enums>
 		<!-- Component ID-->
 		<enum name="REF_COMPONENT_ID">
@@ -12,18 +14,24 @@
 				<description>Referee server.</description>
 			</entry>
 			<entry value="2" name="REF_COMPONENT_ID_X_FISHMONGER_A">
-				<description>Team X Fishmonger.</description>
+				<description>Team X Fishmonger A.</description>
 			</entry>
 			<entry value="3" name="REF_COMPONENT_ID_X_FISHMONGER_B">
-				<description>Team Y Fishmonger.</description>
+				<description>Team X Fishmonger B.</description>
 			</entry>
-			<entry value="4" name="REF_COMPONENT_ID_Y_FISHMONGER_A">
-				<description>Team X Fishmonger.</description>
+			<entry value="4" name="REF_COMPONENT_ID_X_FEEDINGTBALE">
+				<description>Team X Feeding Table.</description>
 			</entry>
-			<entry value="5" name="REF_COMPONENT_ID_Y_FISHMONGER_B">
-				<description>Team Y Fishmonger.</description>
+			<entry value="5" name="REF_COMPONENT_ID_Y_FISHMONGER_A">
+				<description>Team Y Fishmonger A.</description>
 			</entry>
-			<entry value="6" name="REF_COMPONENT_ID_FISHPOND">
+			<entry value="6" name="REF_COMPONENT_ID_Y_FISHMONGER_B">
+				<description>Team Y Fishmonger B.</description>
+			</entry>
+			<entry value="7" name="REF_COMPONENT_ID_Y_FEEDINGTBALE">
+				<description>Team Y Feeding Table.</description>
+			</entry>
+			<entry value="8" name="REF_COMPONENT_ID_FISHPOND">
 				<description>Fish pond.</description>
 			</entry>
 		</enum>
@@ -49,14 +57,36 @@
 			<entry value="0" name="REF_FISHMONGER_STATE_STOP">
 				<description>STOP State.</description>
 			</entry>
-			<entry value="1" name="REF_FISHMONGER_STATE_SCANNING">
+			<entry value="1" name="REF_FISHMONGER_STATE_FIXING">
+				<description>Fixing mode and waiting for repairing.</description>
+			</entry>
+			<entry value="2" name="REF_FISHMONGER_STATE_SCANNING">
 				<description>Fishmonger is waiting for the fish.</description>
 			</entry>
-			<entry value="2" name="REF_FISHMONGER_STATE_COOLING">
+			<entry value="3" name="REF_FISHMONGER_STATE_COOLING">
 				<description>Fishmonger is cooling.</description>
 			</entry>
-			<entry value="3" name="REF_FISHMONGER_STATE_TRIGGERED">
+			<entry value="4" name="REF_FISHMONGER_STATE_TRIGGERED">
 				<description>Fishmonger triggered by fish.</description>
+			</entry>
+		</enum>
+		<!-- Feeding table state machine -->
+		<enum name="REF_FEEDINGTABLE_STATE">
+			<description>State machine of fishmonger.</description>
+			<entry value="0" name="REF_FEEDINGTABLE_STATE_STOP">
+				<description>STOP State.</description>
+			</entry>
+			<entry value="1" name="REF_FEEDINGTABLE_STATE_FIXING">
+				<description>Fixing mode and waiting for repairing.</description>
+			</entry>
+			<entry value="2" name="REF_FEEDINGTABLE_STATE_NORMAL">
+				<description>Feeding table is normal and stable.</description>
+			</entry>
+			<entry value="3" name="REF_FEEDINGTABLE_STATE_RELEASE">
+				<description>Feeding table is releasig new fish feed.</description>
+			</entry>
+			<entry value="4" name="REF_FEEDINGTABLE_STATE_CLEAN">
+				<description>Feeding table is turning the table over.</description>
 			</entry>
 		</enum>
 		<!-- Fish pond state machine -->
@@ -65,13 +95,16 @@
 			<entry value="0" name="REF_FISHPOND_STATE_STOP">
 				<description>STOP State.</description>
 			</entry>
-			<entry value="1" name="REF_FISHPOND_STATE_NORMAL">
+			<entry value="1" name="REF_FISHPOND_STATE_FIXING">
+				<description>Fixing mode and waiting for repairing.</description>
+			</entry>
+			<entry value="2" name="REF_FISHPOND_STATE_NORMAL">
 				<description>Fish pond is normal and stable.</description>
 			</entry>
-			<entry value="2" name="REF_FISHPOND_STATE_RELEASE">
+			<entry value="3" name="REF_FISHPOND_STATE_RELEASE">
 				<description>Fish pond will release a box of fish.</description>
 			</entry>
-			<entry value="3" name="REF_FISHPOND_STATE_CLEAN">
+			<entry value="4" name="REF_FISHPOND_STATE_CLEAN">
 				<description>Fish pond will turn the table over.</description>
 			</entry>
 		</enum>
@@ -119,7 +152,7 @@
 		</message>
 		<!-- Fishmonger find a fish -->
 		<message id="4" name="FISHMONGER_FIND_FISH">
-			<description>Indicate fish man find a fish.</description>
+			<description>Indicate fishmonger find a fish.</description>
 			<field type="uint8_t" name="component" enum="REF_COMPONENT_ID">Indicate which fishmonger.</field>
 			<field type="uint8_t" name="fish_type" enum="REF_FISH_TYPE">Indicate the type of the fish.</field>
 			<field type="uint16_t" name="pack_count">Indicate how many same packs have been sent since fishmonger is at TRIGGERED. First pack is 0.</field>

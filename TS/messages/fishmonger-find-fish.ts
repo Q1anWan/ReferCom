@@ -3,7 +3,7 @@ import {readInt64LE, readUInt64LE} from 'node-mavlink';
 import {RefComponentId} from '../enums/ref-component-id';
 import {RefFishType} from '../enums/ref-fish-type';
 /*
-Indicate fish man find a fish.
+Indicate fishmonger find a fish.
 */
 // component Indicate which fishmonger. uint8_t
 // fish_type Indicate the type of the fish. uint8_t

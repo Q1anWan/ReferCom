@@ -333,17 +333,21 @@ enums["REF_COMPONENT_ID"] = {}
 REF_COMPONENT_ID_SERVER = 1
 enums["REF_COMPONENT_ID"][1] = EnumEntry("REF_COMPONENT_ID_SERVER", """Referee server.""")
 REF_COMPONENT_ID_X_FISHMONGER_A = 2
-enums["REF_COMPONENT_ID"][2] = EnumEntry("REF_COMPONENT_ID_X_FISHMONGER_A", """Team X Fishmonger.""")
+enums["REF_COMPONENT_ID"][2] = EnumEntry("REF_COMPONENT_ID_X_FISHMONGER_A", """Team X Fishmonger A.""")
 REF_COMPONENT_ID_X_FISHMONGER_B = 3
-enums["REF_COMPONENT_ID"][3] = EnumEntry("REF_COMPONENT_ID_X_FISHMONGER_B", """Team Y Fishmonger.""")
-REF_COMPONENT_ID_Y_FISHMONGER_A = 4
-enums["REF_COMPONENT_ID"][4] = EnumEntry("REF_COMPONENT_ID_Y_FISHMONGER_A", """Team X Fishmonger.""")
-REF_COMPONENT_ID_Y_FISHMONGER_B = 5
-enums["REF_COMPONENT_ID"][5] = EnumEntry("REF_COMPONENT_ID_Y_FISHMONGER_B", """Team Y Fishmonger.""")
-REF_COMPONENT_ID_FISHPOND = 6
-enums["REF_COMPONENT_ID"][6] = EnumEntry("REF_COMPONENT_ID_FISHPOND", """Fish pond.""")
-REF_COMPONENT_ID_ENUM_END = 7
-enums["REF_COMPONENT_ID"][7] = EnumEntry("REF_COMPONENT_ID_ENUM_END", """""")
+enums["REF_COMPONENT_ID"][3] = EnumEntry("REF_COMPONENT_ID_X_FISHMONGER_B", """Team X Fishmonger B.""")
+REF_COMPONENT_ID_X_FEEDINGTBALE = 4
+enums["REF_COMPONENT_ID"][4] = EnumEntry("REF_COMPONENT_ID_X_FEEDINGTBALE", """Team X Feeding Table.""")
+REF_COMPONENT_ID_Y_FISHMONGER_A = 5
+enums["REF_COMPONENT_ID"][5] = EnumEntry("REF_COMPONENT_ID_Y_FISHMONGER_A", """Team Y Fishmonger A.""")
+REF_COMPONENT_ID_Y_FISHMONGER_B = 6
+enums["REF_COMPONENT_ID"][6] = EnumEntry("REF_COMPONENT_ID_Y_FISHMONGER_B", """Team Y Fishmonger B.""")
+REF_COMPONENT_ID_Y_FEEDINGTBALE = 7
+enums["REF_COMPONENT_ID"][7] = EnumEntry("REF_COMPONENT_ID_Y_FEEDINGTBALE", """Team Y Feeding Table.""")
+REF_COMPONENT_ID_FISHPOND = 8
+enums["REF_COMPONENT_ID"][8] = EnumEntry("REF_COMPONENT_ID_FISHPOND", """Fish pond.""")
+REF_COMPONENT_ID_ENUM_END = 9
+enums["REF_COMPONENT_ID"][9] = EnumEntry("REF_COMPONENT_ID_ENUM_END", """""")
 
 # REF_ERROR_CODE
 enums["REF_ERROR_CODE"] = {}
@@ -362,27 +366,46 @@ enums["REF_ERROR_CODE"][4] = EnumEntry("REF_ERROR_CODE_ENUM_END", """""")
 enums["REF_FISHMONGER_STATE"] = {}
 REF_FISHMONGER_STATE_STOP = 0
 enums["REF_FISHMONGER_STATE"][0] = EnumEntry("REF_FISHMONGER_STATE_STOP", """STOP State.""")
-REF_FISHMONGER_STATE_SCANNING = 1
-enums["REF_FISHMONGER_STATE"][1] = EnumEntry("REF_FISHMONGER_STATE_SCANNING", """Fishmonger is waiting for the fish.""")
-REF_FISHMONGER_STATE_COOLING = 2
-enums["REF_FISHMONGER_STATE"][2] = EnumEntry("REF_FISHMONGER_STATE_COOLING", """Fishmonger is cooling.""")
-REF_FISHMONGER_STATE_TRIGGERED = 3
-enums["REF_FISHMONGER_STATE"][3] = EnumEntry("REF_FISHMONGER_STATE_TRIGGERED", """Fishmonger triggered by fish.""")
-REF_FISHMONGER_STATE_ENUM_END = 4
-enums["REF_FISHMONGER_STATE"][4] = EnumEntry("REF_FISHMONGER_STATE_ENUM_END", """""")
+REF_FISHMONGER_STATE_FIXING = 1
+enums["REF_FISHMONGER_STATE"][1] = EnumEntry("REF_FISHMONGER_STATE_FIXING", """Fixing mode and waiting for repairing.""")
+REF_FISHMONGER_STATE_SCANNING = 2
+enums["REF_FISHMONGER_STATE"][2] = EnumEntry("REF_FISHMONGER_STATE_SCANNING", """Fishmonger is waiting for the fish.""")
+REF_FISHMONGER_STATE_COOLING = 3
+enums["REF_FISHMONGER_STATE"][3] = EnumEntry("REF_FISHMONGER_STATE_COOLING", """Fishmonger is cooling.""")
+REF_FISHMONGER_STATE_TRIGGERED = 4
+enums["REF_FISHMONGER_STATE"][4] = EnumEntry("REF_FISHMONGER_STATE_TRIGGERED", """Fishmonger triggered by fish.""")
+REF_FISHMONGER_STATE_ENUM_END = 5
+enums["REF_FISHMONGER_STATE"][5] = EnumEntry("REF_FISHMONGER_STATE_ENUM_END", """""")
+
+# REF_FEEDINGTABLE_STATE
+enums["REF_FEEDINGTABLE_STATE"] = {}
+REF_FEEDINGTABLE_STATE_STOP = 0
+enums["REF_FEEDINGTABLE_STATE"][0] = EnumEntry("REF_FEEDINGTABLE_STATE_STOP", """STOP State.""")
+REF_FEEDINGTABLE_STATE_FIXING = 1
+enums["REF_FEEDINGTABLE_STATE"][1] = EnumEntry("REF_FEEDINGTABLE_STATE_FIXING", """Fixing mode and waiting for repairing.""")
+REF_FEEDINGTABLE_STATE_NORMAL = 2
+enums["REF_FEEDINGTABLE_STATE"][2] = EnumEntry("REF_FEEDINGTABLE_STATE_NORMAL", """Feeding table is normal and stable.""")
+REF_FEEDINGTABLE_STATE_RELEASE = 3
+enums["REF_FEEDINGTABLE_STATE"][3] = EnumEntry("REF_FEEDINGTABLE_STATE_RELEASE", """Feeding table is releasig new fish feed.""")
+REF_FEEDINGTABLE_STATE_CLEAN = 4
+enums["REF_FEEDINGTABLE_STATE"][4] = EnumEntry("REF_FEEDINGTABLE_STATE_CLEAN", """Feeding table is turning the table over.""")
+REF_FEEDINGTABLE_STATE_ENUM_END = 5
+enums["REF_FEEDINGTABLE_STATE"][5] = EnumEntry("REF_FEEDINGTABLE_STATE_ENUM_END", """""")
 
 # REF_FISHPOND_STATE
 enums["REF_FISHPOND_STATE"] = {}
 REF_FISHPOND_STATE_STOP = 0
 enums["REF_FISHPOND_STATE"][0] = EnumEntry("REF_FISHPOND_STATE_STOP", """STOP State.""")
-REF_FISHPOND_STATE_NORMAL = 1
-enums["REF_FISHPOND_STATE"][1] = EnumEntry("REF_FISHPOND_STATE_NORMAL", """Fish pond is normal and stable.""")
-REF_FISHPOND_STATE_RELEASE = 2
-enums["REF_FISHPOND_STATE"][2] = EnumEntry("REF_FISHPOND_STATE_RELEASE", """Fish pond will release a box of fish.""")
-REF_FISHPOND_STATE_CLEAN = 3
-enums["REF_FISHPOND_STATE"][3] = EnumEntry("REF_FISHPOND_STATE_CLEAN", """Fish pond will turn the table over.""")
-REF_FISHPOND_STATE_ENUM_END = 4
-enums["REF_FISHPOND_STATE"][4] = EnumEntry("REF_FISHPOND_STATE_ENUM_END", """""")
+REF_FISHPOND_STATE_FIXING = 1
+enums["REF_FISHPOND_STATE"][1] = EnumEntry("REF_FISHPOND_STATE_FIXING", """Fixing mode and waiting for repairing.""")
+REF_FISHPOND_STATE_NORMAL = 2
+enums["REF_FISHPOND_STATE"][2] = EnumEntry("REF_FISHPOND_STATE_NORMAL", """Fish pond is normal and stable.""")
+REF_FISHPOND_STATE_RELEASE = 3
+enums["REF_FISHPOND_STATE"][3] = EnumEntry("REF_FISHPOND_STATE_RELEASE", """Fish pond will release a box of fish.""")
+REF_FISHPOND_STATE_CLEAN = 4
+enums["REF_FISHPOND_STATE"][4] = EnumEntry("REF_FISHPOND_STATE_CLEAN", """Fish pond will turn the table over.""")
+REF_FISHPOND_STATE_ENUM_END = 5
+enums["REF_FISHPOND_STATE"][5] = EnumEntry("REF_FISHPOND_STATE_ENUM_END", """""")
 
 # REF_FISH_TYPE
 enums["REF_FISH_TYPE"] = {}
@@ -529,7 +552,7 @@ setattr(MAVLink_component_heartbeat_message, "name", mavlink_msg_deprecated_name
 
 class MAVLink_fishmonger_find_fish_message(MAVLink_message):
     """
-    Indicate fish man find a fish.
+    Indicate fishmonger find a fish.
     """
 
     id = MAVLINK_MSG_ID_FISHMONGER_FIND_FISH
@@ -1049,7 +1072,7 @@ class MAVLink(object):
 
     def fishmonger_find_fish_encode(self, component: int, fish_type: int, pack_count: int) -> MAVLink_fishmonger_find_fish_message:
         """
-        Indicate fish man find a fish.
+        Indicate fishmonger find a fish.
 
         component                 : Indicate which fishmonger. (type:uint8_t, values:REF_COMPONENT_ID)
         fish_type                 : Indicate the type of the fish. (type:uint8_t, values:REF_FISH_TYPE)
@@ -1060,7 +1083,7 @@ class MAVLink(object):
 
     def fishmonger_find_fish_send(self, component: int, fish_type: int, pack_count: int, force_mavlink1: bool = False) -> None:
         """
-        Indicate fish man find a fish.
+        Indicate fishmonger find a fish.
 
         component                 : Indicate which fishmonger. (type:uint8_t, values:REF_COMPONENT_ID)
         fish_type                 : Indicate the type of the fish. (type:uint8_t, values:REF_FISH_TYPE)

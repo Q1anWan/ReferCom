@@ -10,7 +10,7 @@
     #error Wrong include order: MAVLINK_REFERCOM.H MUST NOT BE DIRECTLY USED. Include mavlink.h from the same directory instead or set ALL AND EVERY defines from MAVLINK.H manually accordingly, including the #define MAVLINK_H call.
 #endif
 
-#define MAVLINK_REFERCOM_XML_HASH 8252630130480296175
+#define MAVLINK_REFERCOM_XML_HASH 7168305113184687891
 
 #ifdef __cplusplus
 extern "C" {
@@ -39,12 +39,14 @@ extern "C" {
 typedef enum REF_COMPONENT_ID
 {
    REF_COMPONENT_ID_SERVER=1, /* Referee server. | */
-   REF_COMPONENT_ID_X_FISHMONGER_A=2, /* Team X Fishmonger. | */
-   REF_COMPONENT_ID_X_FISHMONGER_B=3, /* Team Y Fishmonger. | */
-   REF_COMPONENT_ID_Y_FISHMONGER_A=4, /* Team X Fishmonger. | */
-   REF_COMPONENT_ID_Y_FISHMONGER_B=5, /* Team Y Fishmonger. | */
-   REF_COMPONENT_ID_FISHPOND=6, /* Fish pond. | */
-   REF_COMPONENT_ID_ENUM_END=7, /*  | */
+   REF_COMPONENT_ID_X_FISHMONGER_A=2, /* Team X Fishmonger A. | */
+   REF_COMPONENT_ID_X_FISHMONGER_B=3, /* Team X Fishmonger B. | */
+   REF_COMPONENT_ID_X_FEEDINGTBALE=4, /* Team X Feeding Table. | */
+   REF_COMPONENT_ID_Y_FISHMONGER_A=5, /* Team Y Fishmonger A. | */
+   REF_COMPONENT_ID_Y_FISHMONGER_B=6, /* Team Y Fishmonger B. | */
+   REF_COMPONENT_ID_Y_FEEDINGTBALE=7, /* Team Y Feeding Table. | */
+   REF_COMPONENT_ID_FISHPOND=8, /* Fish pond. | */
+   REF_COMPONENT_ID_ENUM_END=9, /*  | */
 } REF_COMPONENT_ID;
 #endif
 
@@ -67,11 +69,26 @@ typedef enum REF_ERROR_CODE
 typedef enum REF_FISHMONGER_STATE
 {
    REF_FISHMONGER_STATE_STOP=0, /* STOP State. | */
-   REF_FISHMONGER_STATE_SCANNING=1, /* Fishmonger is waiting for the fish. | */
-   REF_FISHMONGER_STATE_COOLING=2, /* Fishmonger is cooling. | */
-   REF_FISHMONGER_STATE_TRIGGERED=3, /* Fishmonger triggered by fish. | */
-   REF_FISHMONGER_STATE_ENUM_END=4, /*  | */
+   REF_FISHMONGER_STATE_FIXING=1, /* Fixing mode and waiting for repairing. | */
+   REF_FISHMONGER_STATE_SCANNING=2, /* Fishmonger is waiting for the fish. | */
+   REF_FISHMONGER_STATE_COOLING=3, /* Fishmonger is cooling. | */
+   REF_FISHMONGER_STATE_TRIGGERED=4, /* Fishmonger triggered by fish. | */
+   REF_FISHMONGER_STATE_ENUM_END=5, /*  | */
 } REF_FISHMONGER_STATE;
+#endif
+
+/** @brief State machine of fishmonger. */
+#ifndef HAVE_ENUM_REF_FEEDINGTABLE_STATE
+#define HAVE_ENUM_REF_FEEDINGTABLE_STATE
+typedef enum REF_FEEDINGTABLE_STATE
+{
+   REF_FEEDINGTABLE_STATE_STOP=0, /* STOP State. | */
+   REF_FEEDINGTABLE_STATE_FIXING=1, /* Fixing mode and waiting for repairing. | */
+   REF_FEEDINGTABLE_STATE_NORMAL=2, /* Feeding table is normal and stable. | */
+   REF_FEEDINGTABLE_STATE_RELEASE=3, /* Feeding table is releasig new fish feed. | */
+   REF_FEEDINGTABLE_STATE_CLEAN=4, /* Feeding table is turning the table over. | */
+   REF_FEEDINGTABLE_STATE_ENUM_END=5, /*  | */
+} REF_FEEDINGTABLE_STATE;
 #endif
 
 /** @brief State machine of fish pond. */
@@ -80,10 +97,11 @@ typedef enum REF_FISHMONGER_STATE
 typedef enum REF_FISHPOND_STATE
 {
    REF_FISHPOND_STATE_STOP=0, /* STOP State. | */
-   REF_FISHPOND_STATE_NORMAL=1, /* Fish pond is normal and stable. | */
-   REF_FISHPOND_STATE_RELEASE=2, /* Fish pond will release a box of fish. | */
-   REF_FISHPOND_STATE_CLEAN=3, /* Fish pond will turn the table over. | */
-   REF_FISHPOND_STATE_ENUM_END=4, /*  | */
+   REF_FISHPOND_STATE_FIXING=1, /* Fixing mode and waiting for repairing. | */
+   REF_FISHPOND_STATE_NORMAL=2, /* Fish pond is normal and stable. | */
+   REF_FISHPOND_STATE_RELEASE=3, /* Fish pond will release a box of fish. | */
+   REF_FISHPOND_STATE_CLEAN=4, /* Fish pond will turn the table over. | */
+   REF_FISHPOND_STATE_ENUM_END=5, /*  | */
 } REF_FISHPOND_STATE;
 #endif
 
@@ -104,12 +122,12 @@ typedef enum REF_FISH_TYPE
 // MAVLINK VERSION
 
 #ifndef MAVLINK_VERSION
-#define MAVLINK_VERSION 3
+#define MAVLINK_VERSION 4
 #endif
 
 #if (MAVLINK_VERSION == 0)
 #undef MAVLINK_VERSION
-#define MAVLINK_VERSION 3
+#define MAVLINK_VERSION 4
 #endif
 
 // MESSAGE DEFINITIONS
