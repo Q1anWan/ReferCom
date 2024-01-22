@@ -52,28 +52,31 @@ Description: Creat this protocol
   State machine of fishmonger.
   | Name                           | ID  | Description                     |
   | ------------------------------ | --- | ------------------------------- |
-  | REF_FISHMONGER_STATE_STOP      | 0   | STOP State.                     |
-  | REF_FISHMONGER_STATE_SCANNING  | 1   | Fishmonger is waiting the fish. |
-  | REF_FISHMONGER_STATE_COOLING   | 2   | Fishmonger is cooling.          |
-  | REF_FISHMONGER_STATE_TRIGGERED | 3   | Fishmonger triggered by fish.   |
+  | REF_FISHMONGER_STATE_STOP      | 0   | STOP State.            |
+  | REF_FISHMONGER_STATE_FIXING    | 1   | Fixing State.            |
+  | REF_FISHMONGER_STATE_SCANNING  | 2   | Fishmonger is waiting the fish. |
+  | REF_FISHMONGER_STATE_COOLING   | 3   | Fishmonger is cooling.          |
+  | REF_FISHMONGER_STATE_TRIGGERED | 4   | Fishmonger triggered by fish.          |
 
 - **REF_FISHPOND_STATE**   
   State machine of fish pond.
   | Name                       | ID  | Description                           |
   | -------------------------- | --- | ------------------------------------- |
-  | REF_FISHPOND_STATE_STOP    | 0   | STOP State.                           |
-  | REF_FISHPOND_STATE_NORMAL  | 1   | Fish pond is normal and stable.       |
-  | REF_FISHPOND_STATE_RELEASE | 2   | Fish pond will release a box of fish. |
-  | REF_FISHPOND_STATE_CLEAN   | 3   | Fish pond will turn the table over.   |
+  | REF_FISHPOND_STATE_STOP    | 0   | STOP State.  |
+  | REF_FISHPOND_STATE_FIXING  | 1   | Fixing State.|
+  | REF_FISHPOND_STATE_NORMAL  | 2   | Fish pond is normal and stable.      |
+  | REF_FISHPOND_STATE_RELEASE | 3   | Fish pond will release a box of fish. |
+  | REF_FISHPOND_STATE_CLEAN   | 4   | Fish pond will turn the table over.  |
 
 - **REF_FEEDINGTABLE_STATE**   
   State machine of feed table.
   | Name                       | ID  | Description                           |
   | -------------------------- | --- | ------------------------------------- |
-  | REF_FEEDINGTABLE_STATE_STOP    | 0   | STOP State.                           |
-  | REF_FEEDINGTABLE_STATE_NORMAL  | 1   | Feeding table is normal and stable.       |
-  | REF_FEEDINGTABLE_STATE_RELEASE | 2   | Feeding table is releasig new fish feed. |
-  | REF_FEEDINGTABLE_STATE_CLEAN   | 3   | Feeding table is turning the table over.   |
+  | REF_FEEDINGTABLE_STATE_STOP    | 0   | STOP State.                  |
+  | REF_FEEDINGTABLE_STATE_FIXING  | 1   | Fixing State.                  |
+  | REF_FEEDINGTABLE_STATE_NORMAL  | 2   | Feeding table is normal and stable.      |
+  | REF_FEEDINGTABLE_STATE_RELEASE | 3   | Feeding table is releasig new fish feed. |
+  | REF_FEEDINGTABLE_STATE_CLEAN   | 4   | Feeding table is turning the table over. |
 
 - **REF_FISH_TYPE**   
   Fish types.
