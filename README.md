@@ -4,6 +4,10 @@
 This submodule is the protocol of Referee System. Based on Mavlink v2.    
 Author: qianwan.Jin   
 
+>Version: Lite-5   
+Generate Date: 2024/01/31     
+Description: Remove fishmonger. Add RC message
+
 >Version: 4   
 Generate Date: 2024/01/22     
 Description: Adding machine Feeding Table and change ID
@@ -33,13 +37,10 @@ Description: Creat this protocol
   | Name                            | ID  | Description        |
   | ------------------------------- | --- | ------------------ |
   | REF_COMPONENT_ID_SERVER         | 1   | Referee server.    |
-  | REF_COMPONENT_ID_X_FISHMONGER_A | 2   | Team X Fishmonger A. |
-  | REF_COMPONENT_ID_X_FISHMONGER_B | 3   | Team X Fishmonger B. |
-  | REF_COMPONENT_ID_X_FEEDINGTBALE | 4   | Team X Feeding Table. |
-  | REF_COMPONENT_ID_Y_FISHMONGER_A | 5   | Team Y Fishmonger A. |
-  | REF_COMPONENT_ID_Y_FISHMONGER_B | 6   | Team Y Fishmonger B. |
-  | REF_COMPONENT_ID_Y_FEEDINGTBALE | 7   | Team Y Feeding Table. |
-  | REF_COMPONENT_ID_FISHPOND       | 8   | Fish pond.         |
+  | REF_COMPONENT_ID_X_FEEDINGTBALE | 2   | Team X Feeding Table. |
+  | REF_COMPONENT_ID_Y_FEEDINGTBALE | 3   | Team Y Feeding Table. |
+  | REF_COMPONENT_ID_FISHPOND       | 4   | Fish pond.         |
+  | REF_COMPONENT_ID_RC             | 5   | Remote controller message.         |
 
 - **REF_ERROR_CODE**   
   Error codes of component.
@@ -49,16 +50,6 @@ Description: Creat this protocol
   | REF_ERROR_COMMUNICATION | 1   | Communication is error.      |
   | REF_ERROR_VISION        | 2   | REF_ERROR_CV.                |
   | REF_ERROR_BATTERY       | 3   | Battery is going to run out. |
-
-- **REF_FISHMONGER_STATE**   
-  State machine of fishmonger.
-  | Name                           | ID  | Description                     |
-  | ------------------------------ | --- | ------------------------------- |
-  | REF_FISHMONGER_STATE_STOP      | 0   | STOP State.            |
-  | REF_FISHMONGER_STATE_FIXING    | 1   | Fixing State.            |
-  | REF_FISHMONGER_STATE_SCANNING  | 2   | Fishmonger is waiting the fish. |
-  | REF_FISHMONGER_STATE_COOLING   | 3   | Fishmonger is cooling.          |
-  | REF_FISHMONGER_STATE_TRIGGERED | 4   | Fishmonger triggered by fish.          |
 
 - **REF_FISHPOND_STATE**   
   State machine of fish pond.
@@ -133,21 +124,19 @@ Description: Creat this protocol
   | battery_voltage | uint16_t |       /        | Indicate voltage of battery. Unit is mV.            |
   | pack_count      | uint32_t |       /        | Indicate id of heartbeat. The first pack is 0.      |
 
-- **fishmonger_find_fish**
+- **state_rc**
   Indicate fish man find a fish.   
   | Field      | Type     |       Enum       | Description                                                                                        |
   | ---------- | -------- | :--------------: | -------------------------------------------------------------------------------------------------- |
-  | component  | uint8_t  | REF_COMPONENT_ID | Indicate which fishmonger.                                                                         |
-  | fish_type  | uint8_t  |  REF_FISH_TYPE   | Indicate the type of the fish.                                                                     |
-  | pack_count | uint16_t |        /         | Indicate how many same packs have been sent since fishmonger is at TRIGGERED. The first pack is 0. |
-
+  | teamX  | uint8_t  | \ | Indicate if team X RC Connected. |
+  | teamY  | uint8_t  |  \   | Indicate if team Y RC Connected. |
 
 ## Sample
 #### Logic
 - When server send a **server_heartbeat** 
   1. Server send **server_heartbeat** 
   2. Components return **component_heartbeat** after received **server_heartbeat**.
-
+  3. Components return **state_rc** after received **server_heartbeat**.
 ---
 
 - When server ask fishpond stop
@@ -188,28 +177,6 @@ Description: Creat this protocol
   2. Components return **component_heartbeat** with state REF_FEEDINGTABLE_STATE_RELEASE after received **set_component_state**.
   3. Components return **component_heartbeat** with REF_FEEDINGTABLE_STATE_NORMAL after cleaning.
 
----
-
-- When server ask fishmonger stop
-  1. Server send **set_component_state** to fishmonger with REF_FISHMONGER_STATE_STOP.
-  2. Components return **component_heartbeat** with state REF_FISHMONGER_STATE_STOP after received **set_component_state**.
-   
-- When server ask fishmonger get into fixing mode
-  1. Server send **set_component_state** to fishmonger with REF_FISHMONGER_STATE_FIXING.
-  2. Components return **component_heartbeat** with state REF_FISHMONGER_STATE_FIXING after received **set_component_state**.
-
-- When server ask fishmonger start scanning 
-  1. Server send **set_component_state** to fishmonger with REF_FISHMONGER_STATE_SCANNING.
-  2. Components return **component_heartbeat** with state REF_FISHMONGER_STATE_SCANNING after received **set_component_state**.
-
-- When fishmonger find a fish
-  1. Fishmonger changes into REF_FISHMONGER_STATE_TRIGGERED until server ask it change.
-  2. Fishmonger send **component_heartbeat** to fishmonger with REF_FISHMONGER_STATE_TRIGGERED. 
-  3. Fishmonger send **fishmonger_find_fish** to server with REF_FISH_TYPE periodically.
-
-- When server realize fishmonger find a fish and ask it get into cooling
-  1. Server send **set_component_state** to fishmonger with REF_FISHMONGER_STATE_COOLING.
-  2. Components return **component_heartbeat** with state REF_FISHMONGER_STATE_COOLING after received **set_component_state**.
 
 
 

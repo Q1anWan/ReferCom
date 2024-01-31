@@ -10,7 +10,7 @@
     #error Wrong include order: MAVLINK_REFERCOM.H MUST NOT BE DIRECTLY USED. Include mavlink.h from the same directory instead or set ALL AND EVERY defines from MAVLINK.H manually accordingly, including the #define MAVLINK_H call.
 #endif
 
-#define MAVLINK_REFERCOM_XML_HASH 7168305113184687891
+#define MAVLINK_REFERCOM_XML_HASH 6689732815456094178
 
 #ifdef __cplusplus
 extern "C" {
@@ -23,7 +23,7 @@ extern "C" {
 #endif
 
 #ifndef MAVLINK_MESSAGE_CRCS
-#define MAVLINK_MESSAGE_CRCS {{0, 36, 4, 4, 0, 0, 0}, {2, 217, 3, 3, 0, 0, 0}, {3, 244, 8, 8, 0, 0, 0}, {4, 36, 4, 4, 0, 0, 0}}
+#define MAVLINK_MESSAGE_CRCS {{0, 36, 4, 4, 0, 0, 0}, {2, 217, 3, 3, 0, 0, 0}, {3, 244, 8, 8, 0, 0, 0}, {4, 22, 2, 2, 0, 0, 0}}
 #endif
 
 #include "../protocol.h"
@@ -39,14 +39,11 @@ extern "C" {
 typedef enum REF_COMPONENT_ID
 {
    REF_COMPONENT_ID_SERVER=1, /* Referee server. | */
-   REF_COMPONENT_ID_X_FISHMONGER_A=2, /* Team X Fishmonger A. | */
-   REF_COMPONENT_ID_X_FISHMONGER_B=3, /* Team X Fishmonger B. | */
-   REF_COMPONENT_ID_X_FEEDINGTBALE=4, /* Team X Feeding Table. | */
-   REF_COMPONENT_ID_Y_FISHMONGER_A=5, /* Team Y Fishmonger A. | */
-   REF_COMPONENT_ID_Y_FISHMONGER_B=6, /* Team Y Fishmonger B. | */
-   REF_COMPONENT_ID_Y_FEEDINGTBALE=7, /* Team Y Feeding Table. | */
-   REF_COMPONENT_ID_FISHPOND=8, /* Fish pond. | */
-   REF_COMPONENT_ID_ENUM_END=9, /*  | */
+   REF_COMPONENT_ID_X_FEEDINGTBALE=2, /* Team X Feeding Table. | */
+   REF_COMPONENT_ID_Y_FEEDINGTBALE=3, /* Team Y Feeding Table. | */
+   REF_COMPONENT_ID_FISHPOND=4, /* Fish pond. | */
+   REF_COMPONENT_ID_RC=5, /* Remoter controller state. | */
+   REF_COMPONENT_ID_ENUM_END=6, /*  | */
 } REF_COMPONENT_ID;
 #endif
 
@@ -55,26 +52,11 @@ typedef enum REF_COMPONENT_ID
 #define HAVE_ENUM_REF_ERROR_CODE
 typedef enum REF_ERROR_CODE
 {
-   REF_ERROR_NONE=0, /* STOP State. | */
+   REF_ERROR_NONE=0, /* No error. | */
    REF_ERROR_COMMUNICATION=1, /* Communication is error. | */
-   REF_ERROR_CV=2, /* Computer vision is error. | */
    REF_ERROR_BATTERY=3, /* Battery is going to run out. | */
    REF_ERROR_CODE_ENUM_END=4, /*  | */
 } REF_ERROR_CODE;
-#endif
-
-/** @brief State machine of fishmonger. */
-#ifndef HAVE_ENUM_REF_FISHMONGER_STATE
-#define HAVE_ENUM_REF_FISHMONGER_STATE
-typedef enum REF_FISHMONGER_STATE
-{
-   REF_FISHMONGER_STATE_STOP=0, /* STOP State. | */
-   REF_FISHMONGER_STATE_FIXING=1, /* Fixing mode and waiting for repairing. | */
-   REF_FISHMONGER_STATE_SCANNING=2, /* Fishmonger is waiting for the fish. | */
-   REF_FISHMONGER_STATE_COOLING=3, /* Fishmonger is cooling. | */
-   REF_FISHMONGER_STATE_TRIGGERED=4, /* Fishmonger triggered by fish. | */
-   REF_FISHMONGER_STATE_ENUM_END=5, /*  | */
-} REF_FISHMONGER_STATE;
 #endif
 
 /** @brief State machine of fishmonger. */
@@ -122,27 +104,27 @@ typedef enum REF_FISH_TYPE
 // MAVLINK VERSION
 
 #ifndef MAVLINK_VERSION
-#define MAVLINK_VERSION 4
+#define MAVLINK_VERSION 5
 #endif
 
 #if (MAVLINK_VERSION == 0)
 #undef MAVLINK_VERSION
-#define MAVLINK_VERSION 4
+#define MAVLINK_VERSION 5
 #endif
 
 // MESSAGE DEFINITIONS
 #include "./mavlink_msg_server_heartbeat.h"
 #include "./mavlink_msg_set_conponent_state.h"
 #include "./mavlink_msg_component_heartbeat.h"
-#include "./mavlink_msg_fishmonger_find_fish.h"
+#include "./mavlink_msg_state_rc.h"
 
 // base include
 
 
 
 #if MAVLINK_REFERCOM_XML_HASH == MAVLINK_PRIMARY_XML_HASH
-# define MAVLINK_MESSAGE_INFO {MAVLINK_MESSAGE_INFO_SERVER_HEARTBEAT, MAVLINK_MESSAGE_INFO_SET_CONPONENT_STATE, MAVLINK_MESSAGE_INFO_COMPONENT_HEARTBEAT, MAVLINK_MESSAGE_INFO_FISHMONGER_FIND_FISH}
-# define MAVLINK_MESSAGE_NAMES {{ "COMPONENT_HEARTBEAT", 3 }, { "FISHMONGER_FIND_FISH", 4 }, { "SERVER_HEARTBEAT", 0 }, { "SET_CONPONENT_STATE", 2 }}
+# define MAVLINK_MESSAGE_INFO {MAVLINK_MESSAGE_INFO_SERVER_HEARTBEAT, MAVLINK_MESSAGE_INFO_SET_CONPONENT_STATE, MAVLINK_MESSAGE_INFO_COMPONENT_HEARTBEAT, MAVLINK_MESSAGE_INFO_STATE_RC}
+# define MAVLINK_MESSAGE_NAMES {{ "COMPONENT_HEARTBEAT", 3 }, { "SERVER_HEARTBEAT", 0 }, { "SET_CONPONENT_STATE", 2 }, { "STATE_RC", 4 }}
 # if MAVLINK_COMMAND_24BIT
 #  include "../mavlink_get_info.h"
 # endif

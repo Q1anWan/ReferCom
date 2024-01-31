@@ -1,11 +1,11 @@
 <?xml version="1.0"?>
 
 <mavlink>
-	<version>4</version>
+	<version>5</version>
 	<!-- Author: qianwan -->
 	<!-- Adding Feeding table and change ID -->
 	<!-- Author: qianwan -->
-	<!-- 3 Date:  2023/12/20 -->
+	<!-- 3 Date:  2024/01/31 -->
 	<enums>
 		<!-- Component ID-->
 		<enum name="REF_COMPONENT_ID">
@@ -13,61 +13,30 @@
 			<entry value="1" name="REF_COMPONENT_ID_SERVER">
 				<description>Referee server.</description>
 			</entry>
-			<entry value="2" name="REF_COMPONENT_ID_X_FISHMONGER_A">
-				<description>Team X Fishmonger A.</description>
-			</entry>
-			<entry value="3" name="REF_COMPONENT_ID_X_FISHMONGER_B">
-				<description>Team X Fishmonger B.</description>
-			</entry>
-			<entry value="4" name="REF_COMPONENT_ID_X_FEEDINGTBALE">
+			<entry value="2" name="REF_COMPONENT_ID_X_FEEDINGTBALE">
 				<description>Team X Feeding Table.</description>
 			</entry>
-			<entry value="5" name="REF_COMPONENT_ID_Y_FISHMONGER_A">
-				<description>Team Y Fishmonger A.</description>
-			</entry>
-			<entry value="6" name="REF_COMPONENT_ID_Y_FISHMONGER_B">
-				<description>Team Y Fishmonger B.</description>
-			</entry>
-			<entry value="7" name="REF_COMPONENT_ID_Y_FEEDINGTBALE">
+			<entry value="3" name="REF_COMPONENT_ID_Y_FEEDINGTBALE">
 				<description>Team Y Feeding Table.</description>
 			</entry>
-			<entry value="8" name="REF_COMPONENT_ID_FISHPOND">
+			<entry value="4" name="REF_COMPONENT_ID_FISHPOND">
 				<description>Fish pond.</description>
+			</entry>
+			<entry value="5" name="REF_COMPONENT_ID_RC">
+				<description>Remoter controller state.</description>
 			</entry>
 		</enum>
 		<!-- Error code -->
 		<enum name="REF_ERROR_CODE">
 			<description>Error codes of component.</description>
 			<entry value="0" name="REF_ERROR_NONE">
-				<description>STOP State.</description>
+				<description>No error.</description>
 			</entry>
 			<entry value="1" name="REF_ERROR_COMMUNICATION">
 				<description>Communication is error.</description>
 			</entry>
-			<entry value="2" name="REF_ERROR_CV">
-				<description>Computer vision is error.</description>
-			</entry>
 			<entry value="3" name="REF_ERROR_BATTERY">
 				<description>Battery is going to run out.</description>
-			</entry>
-		</enum>
-		<!-- Fishmonger state machine -->
-		<enum name="REF_FISHMONGER_STATE">
-			<description>State machine of fishmonger.</description>
-			<entry value="0" name="REF_FISHMONGER_STATE_STOP">
-				<description>STOP State.</description>
-			</entry>
-			<entry value="1" name="REF_FISHMONGER_STATE_FIXING">
-				<description>Fixing mode and waiting for repairing.</description>
-			</entry>
-			<entry value="2" name="REF_FISHMONGER_STATE_SCANNING">
-				<description>Fishmonger is waiting for the fish.</description>
-			</entry>
-			<entry value="3" name="REF_FISHMONGER_STATE_COOLING">
-				<description>Fishmonger is cooling.</description>
-			</entry>
-			<entry value="4" name="REF_FISHMONGER_STATE_TRIGGERED">
-				<description>Fishmonger triggered by fish.</description>
 			</entry>
 		</enum>
 		<!-- Feeding table state machine -->
@@ -150,12 +119,11 @@
 			<field type="uint16_t" name="battery_voltage" units="mV">Indicate voltage of battery.</field>
 			<field type="uint32_t" name="pack_count">Indicate id of heartbeat. First pack is 0.</field>
 		</message>
-		<!-- Fishmonger find a fish -->
-		<message id="4" name="FISHMONGER_FIND_FISH">
-			<description>Indicate fishmonger find a fish.</description>
-			<field type="uint8_t" name="component" enum="REF_COMPONENT_ID">Indicate which fishmonger.</field>
-			<field type="uint8_t" name="fish_type" enum="REF_FISH_TYPE">Indicate the type of the fish.</field>
-			<field type="uint16_t" name="pack_count">Indicate how many same packs have been sent since fishmonger is at TRIGGERED. First pack is 0.</field>
+		<!-- RC State -->
+		<message id="4" name="STATE_RC">
+			<description>Indicate whether RC is connected.</description>
+			<field type="uint8_t" name="teamX">Indicate if teamX RC Connected.</field>
+			<field type="uint8_t" name="teamY">Indicate if teamY RC Connected.</field>
 		</message>
 	</messages>
 </mavlink>

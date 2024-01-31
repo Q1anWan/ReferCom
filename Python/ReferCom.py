@@ -332,50 +332,27 @@ enums: Dict[str, Dict[int, EnumEntry]] = {}
 enums["REF_COMPONENT_ID"] = {}
 REF_COMPONENT_ID_SERVER = 1
 enums["REF_COMPONENT_ID"][1] = EnumEntry("REF_COMPONENT_ID_SERVER", """Referee server.""")
-REF_COMPONENT_ID_X_FISHMONGER_A = 2
-enums["REF_COMPONENT_ID"][2] = EnumEntry("REF_COMPONENT_ID_X_FISHMONGER_A", """Team X Fishmonger A.""")
-REF_COMPONENT_ID_X_FISHMONGER_B = 3
-enums["REF_COMPONENT_ID"][3] = EnumEntry("REF_COMPONENT_ID_X_FISHMONGER_B", """Team X Fishmonger B.""")
-REF_COMPONENT_ID_X_FEEDINGTBALE = 4
-enums["REF_COMPONENT_ID"][4] = EnumEntry("REF_COMPONENT_ID_X_FEEDINGTBALE", """Team X Feeding Table.""")
-REF_COMPONENT_ID_Y_FISHMONGER_A = 5
-enums["REF_COMPONENT_ID"][5] = EnumEntry("REF_COMPONENT_ID_Y_FISHMONGER_A", """Team Y Fishmonger A.""")
-REF_COMPONENT_ID_Y_FISHMONGER_B = 6
-enums["REF_COMPONENT_ID"][6] = EnumEntry("REF_COMPONENT_ID_Y_FISHMONGER_B", """Team Y Fishmonger B.""")
-REF_COMPONENT_ID_Y_FEEDINGTBALE = 7
-enums["REF_COMPONENT_ID"][7] = EnumEntry("REF_COMPONENT_ID_Y_FEEDINGTBALE", """Team Y Feeding Table.""")
-REF_COMPONENT_ID_FISHPOND = 8
-enums["REF_COMPONENT_ID"][8] = EnumEntry("REF_COMPONENT_ID_FISHPOND", """Fish pond.""")
-REF_COMPONENT_ID_ENUM_END = 9
-enums["REF_COMPONENT_ID"][9] = EnumEntry("REF_COMPONENT_ID_ENUM_END", """""")
+REF_COMPONENT_ID_X_FEEDINGTBALE = 2
+enums["REF_COMPONENT_ID"][2] = EnumEntry("REF_COMPONENT_ID_X_FEEDINGTBALE", """Team X Feeding Table.""")
+REF_COMPONENT_ID_Y_FEEDINGTBALE = 3
+enums["REF_COMPONENT_ID"][3] = EnumEntry("REF_COMPONENT_ID_Y_FEEDINGTBALE", """Team Y Feeding Table.""")
+REF_COMPONENT_ID_FISHPOND = 4
+enums["REF_COMPONENT_ID"][4] = EnumEntry("REF_COMPONENT_ID_FISHPOND", """Fish pond.""")
+REF_COMPONENT_ID_RC = 5
+enums["REF_COMPONENT_ID"][5] = EnumEntry("REF_COMPONENT_ID_RC", """Remoter controller state.""")
+REF_COMPONENT_ID_ENUM_END = 6
+enums["REF_COMPONENT_ID"][6] = EnumEntry("REF_COMPONENT_ID_ENUM_END", """""")
 
 # REF_ERROR_CODE
 enums["REF_ERROR_CODE"] = {}
 REF_ERROR_NONE = 0
-enums["REF_ERROR_CODE"][0] = EnumEntry("REF_ERROR_NONE", """STOP State.""")
+enums["REF_ERROR_CODE"][0] = EnumEntry("REF_ERROR_NONE", """No error.""")
 REF_ERROR_COMMUNICATION = 1
 enums["REF_ERROR_CODE"][1] = EnumEntry("REF_ERROR_COMMUNICATION", """Communication is error.""")
-REF_ERROR_CV = 2
-enums["REF_ERROR_CODE"][2] = EnumEntry("REF_ERROR_CV", """Computer vision is error.""")
 REF_ERROR_BATTERY = 3
 enums["REF_ERROR_CODE"][3] = EnumEntry("REF_ERROR_BATTERY", """Battery is going to run out.""")
 REF_ERROR_CODE_ENUM_END = 4
 enums["REF_ERROR_CODE"][4] = EnumEntry("REF_ERROR_CODE_ENUM_END", """""")
-
-# REF_FISHMONGER_STATE
-enums["REF_FISHMONGER_STATE"] = {}
-REF_FISHMONGER_STATE_STOP = 0
-enums["REF_FISHMONGER_STATE"][0] = EnumEntry("REF_FISHMONGER_STATE_STOP", """STOP State.""")
-REF_FISHMONGER_STATE_FIXING = 1
-enums["REF_FISHMONGER_STATE"][1] = EnumEntry("REF_FISHMONGER_STATE_FIXING", """Fixing mode and waiting for repairing.""")
-REF_FISHMONGER_STATE_SCANNING = 2
-enums["REF_FISHMONGER_STATE"][2] = EnumEntry("REF_FISHMONGER_STATE_SCANNING", """Fishmonger is waiting for the fish.""")
-REF_FISHMONGER_STATE_COOLING = 3
-enums["REF_FISHMONGER_STATE"][3] = EnumEntry("REF_FISHMONGER_STATE_COOLING", """Fishmonger is cooling.""")
-REF_FISHMONGER_STATE_TRIGGERED = 4
-enums["REF_FISHMONGER_STATE"][4] = EnumEntry("REF_FISHMONGER_STATE_TRIGGERED", """Fishmonger triggered by fish.""")
-REF_FISHMONGER_STATE_ENUM_END = 5
-enums["REF_FISHMONGER_STATE"][5] = EnumEntry("REF_FISHMONGER_STATE_ENUM_END", """""")
 
 # REF_FEEDINGTABLE_STATE
 enums["REF_FEEDINGTABLE_STATE"] = {}
@@ -428,7 +405,7 @@ MAVLINK_MSG_ID_UNKNOWN = -2
 MAVLINK_MSG_ID_SERVER_HEARTBEAT = 0
 MAVLINK_MSG_ID_SET_CONPONENT_STATE = 2
 MAVLINK_MSG_ID_COMPONENT_HEARTBEAT = 3
-MAVLINK_MSG_ID_FISHMONGER_FIND_FISH = 4
+MAVLINK_MSG_ID_STATE_RC = 4
 
 
 class MAVLink_server_heartbeat_message(MAVLink_message):
@@ -550,51 +527,50 @@ class MAVLink_component_heartbeat_message(MAVLink_message):
 setattr(MAVLink_component_heartbeat_message, "name", mavlink_msg_deprecated_name_property())
 
 
-class MAVLink_fishmonger_find_fish_message(MAVLink_message):
+class MAVLink_state_rc_message(MAVLink_message):
     """
-    Indicate fishmonger find a fish.
+    Indicate whether RC is connected.
     """
 
-    id = MAVLINK_MSG_ID_FISHMONGER_FIND_FISH
-    msgname = "FISHMONGER_FIND_FISH"
-    fieldnames = ["component", "fish_type", "pack_count"]
-    ordered_fieldnames = ["pack_count", "component", "fish_type"]
-    fieldtypes = ["uint8_t", "uint8_t", "uint16_t"]
+    id = MAVLINK_MSG_ID_STATE_RC
+    msgname = "STATE_RC"
+    fieldnames = ["teamX", "teamY"]
+    ordered_fieldnames = ["teamX", "teamY"]
+    fieldtypes = ["uint8_t", "uint8_t"]
     fielddisplays_by_name: Dict[str, str] = {}
-    fieldenums_by_name: Dict[str, str] = {"component": "REF_COMPONENT_ID", "fish_type": "REF_FISH_TYPE"}
+    fieldenums_by_name: Dict[str, str] = {}
     fieldunits_by_name: Dict[str, str] = {}
-    native_format = bytearray(b"<HBB")
-    orders = [1, 2, 0]
-    lengths = [1, 1, 1]
-    array_lengths = [0, 0, 0]
-    crc_extra = 36
-    unpacker = struct.Struct("<HBB")
+    native_format = bytearray(b"<BB")
+    orders = [0, 1]
+    lengths = [1, 1]
+    array_lengths = [0, 0]
+    crc_extra = 22
+    unpacker = struct.Struct("<BB")
     instance_field = None
     instance_offset = -1
 
-    def __init__(self, component: int, fish_type: int, pack_count: int):
-        MAVLink_message.__init__(self, MAVLink_fishmonger_find_fish_message.id, MAVLink_fishmonger_find_fish_message.msgname)
-        self._fieldnames = MAVLink_fishmonger_find_fish_message.fieldnames
-        self._instance_field = MAVLink_fishmonger_find_fish_message.instance_field
-        self._instance_offset = MAVLink_fishmonger_find_fish_message.instance_offset
-        self.component = component
-        self.fish_type = fish_type
-        self.pack_count = pack_count
+    def __init__(self, teamX: int, teamY: int):
+        MAVLink_message.__init__(self, MAVLink_state_rc_message.id, MAVLink_state_rc_message.msgname)
+        self._fieldnames = MAVLink_state_rc_message.fieldnames
+        self._instance_field = MAVLink_state_rc_message.instance_field
+        self._instance_offset = MAVLink_state_rc_message.instance_offset
+        self.teamX = teamX
+        self.teamY = teamY
 
     def pack(self, mav: "MAVLink", force_mavlink1: bool = False) -> bytes:
-        return self._pack(mav, self.crc_extra, self.unpacker.pack(self.pack_count, self.component, self.fish_type), force_mavlink1=force_mavlink1)
+        return self._pack(mav, self.crc_extra, self.unpacker.pack(self.teamX, self.teamY), force_mavlink1=force_mavlink1)
 
 
 # Define name on the class for backwards compatibility (it is now msgname).
 # Done with setattr to hide the class variable from mypy.
-setattr(MAVLink_fishmonger_find_fish_message, "name", mavlink_msg_deprecated_name_property())
+setattr(MAVLink_state_rc_message, "name", mavlink_msg_deprecated_name_property())
 
 
 mavlink_map: Dict[int, Type[MAVLink_message]] = {
     MAVLINK_MSG_ID_SERVER_HEARTBEAT: MAVLink_server_heartbeat_message,
     MAVLINK_MSG_ID_SET_CONPONENT_STATE: MAVLink_set_conponent_state_message,
     MAVLINK_MSG_ID_COMPONENT_HEARTBEAT: MAVLink_component_heartbeat_message,
-    MAVLINK_MSG_ID_FISHMONGER_FIND_FISH: MAVLink_fishmonger_find_fish_message,
+    MAVLINK_MSG_ID_STATE_RC: MAVLink_state_rc_message,
 }
 
 
@@ -1070,24 +1046,22 @@ class MAVLink(object):
         """
         self.send(self.component_heartbeat_encode(state, error_code, battery_voltage, pack_count), force_mavlink1=force_mavlink1)
 
-    def fishmonger_find_fish_encode(self, component: int, fish_type: int, pack_count: int) -> MAVLink_fishmonger_find_fish_message:
+    def state_rc_encode(self, teamX: int, teamY: int) -> MAVLink_state_rc_message:
         """
-        Indicate fishmonger find a fish.
+        Indicate whether RC is connected.
 
-        component                 : Indicate which fishmonger. (type:uint8_t, values:REF_COMPONENT_ID)
-        fish_type                 : Indicate the type of the fish. (type:uint8_t, values:REF_FISH_TYPE)
-        pack_count                : Indicate how many same packs have been sent since fishmonger is at TRIGGERED. First pack is 0. (type:uint16_t)
-
-        """
-        return MAVLink_fishmonger_find_fish_message(component, fish_type, pack_count)
-
-    def fishmonger_find_fish_send(self, component: int, fish_type: int, pack_count: int, force_mavlink1: bool = False) -> None:
-        """
-        Indicate fishmonger find a fish.
-
-        component                 : Indicate which fishmonger. (type:uint8_t, values:REF_COMPONENT_ID)
-        fish_type                 : Indicate the type of the fish. (type:uint8_t, values:REF_FISH_TYPE)
-        pack_count                : Indicate how many same packs have been sent since fishmonger is at TRIGGERED. First pack is 0. (type:uint16_t)
+        teamX                     : Indicate if teamX RC Connected. (type:uint8_t)
+        teamY                     : Indicate if teamY RC Connected. (type:uint8_t)
 
         """
-        self.send(self.fishmonger_find_fish_encode(component, fish_type, pack_count), force_mavlink1=force_mavlink1)
+        return MAVLink_state_rc_message(teamX, teamY)
+
+    def state_rc_send(self, teamX: int, teamY: int, force_mavlink1: bool = False) -> None:
+        """
+        Indicate whether RC is connected.
+
+        teamX                     : Indicate if teamX RC Connected. (type:uint8_t)
+        teamY                     : Indicate if teamY RC Connected. (type:uint8_t)
+
+        """
+        self.send(self.state_rc_encode(teamX, teamY), force_mavlink1=force_mavlink1)
