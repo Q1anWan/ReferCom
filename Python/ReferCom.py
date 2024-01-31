@@ -338,10 +338,8 @@ REF_COMPONENT_ID_Y_FEEDINGTBALE = 3
 enums["REF_COMPONENT_ID"][3] = EnumEntry("REF_COMPONENT_ID_Y_FEEDINGTBALE", """Team Y Feeding Table.""")
 REF_COMPONENT_ID_FISHPOND = 4
 enums["REF_COMPONENT_ID"][4] = EnumEntry("REF_COMPONENT_ID_FISHPOND", """Fish pond.""")
-REF_COMPONENT_ID_RC = 5
-enums["REF_COMPONENT_ID"][5] = EnumEntry("REF_COMPONENT_ID_RC", """Remoter controller state.""")
-REF_COMPONENT_ID_ENUM_END = 6
-enums["REF_COMPONENT_ID"][6] = EnumEntry("REF_COMPONENT_ID_ENUM_END", """""")
+REF_COMPONENT_ID_ENUM_END = 5
+enums["REF_COMPONENT_ID"][5] = EnumEntry("REF_COMPONENT_ID_ENUM_END", """""")
 
 # REF_ERROR_CODE
 enums["REF_ERROR_CODE"] = {}
@@ -534,31 +532,30 @@ class MAVLink_state_rc_message(MAVLink_message):
 
     id = MAVLINK_MSG_ID_STATE_RC
     msgname = "STATE_RC"
-    fieldnames = ["teamX", "teamY"]
-    ordered_fieldnames = ["teamX", "teamY"]
-    fieldtypes = ["uint8_t", "uint8_t"]
+    fieldnames = ["state"]
+    ordered_fieldnames = ["state"]
+    fieldtypes = ["uint8_t"]
     fielddisplays_by_name: Dict[str, str] = {}
     fieldenums_by_name: Dict[str, str] = {}
     fieldunits_by_name: Dict[str, str] = {}
-    native_format = bytearray(b"<BB")
-    orders = [0, 1]
-    lengths = [1, 1]
-    array_lengths = [0, 0]
-    crc_extra = 22
-    unpacker = struct.Struct("<BB")
+    native_format = bytearray(b"<B")
+    orders = [0]
+    lengths = [1]
+    array_lengths = [0]
+    crc_extra = 182
+    unpacker = struct.Struct("<B")
     instance_field = None
     instance_offset = -1
 
-    def __init__(self, teamX: int, teamY: int):
+    def __init__(self, state: int):
         MAVLink_message.__init__(self, MAVLink_state_rc_message.id, MAVLink_state_rc_message.msgname)
         self._fieldnames = MAVLink_state_rc_message.fieldnames
         self._instance_field = MAVLink_state_rc_message.instance_field
         self._instance_offset = MAVLink_state_rc_message.instance_offset
-        self.teamX = teamX
-        self.teamY = teamY
+        self.state = state
 
     def pack(self, mav: "MAVLink", force_mavlink1: bool = False) -> bytes:
-        return self._pack(mav, self.crc_extra, self.unpacker.pack(self.teamX, self.teamY), force_mavlink1=force_mavlink1)
+        return self._pack(mav, self.crc_extra, self.unpacker.pack(self.state), force_mavlink1=force_mavlink1)
 
 
 # Define name on the class for backwards compatibility (it is now msgname).
@@ -1046,22 +1043,20 @@ class MAVLink(object):
         """
         self.send(self.component_heartbeat_encode(state, error_code, battery_voltage, pack_count), force_mavlink1=force_mavlink1)
 
-    def state_rc_encode(self, teamX: int, teamY: int) -> MAVLink_state_rc_message:
+    def state_rc_encode(self, state: int) -> MAVLink_state_rc_message:
         """
         Indicate whether RC is connected.
 
-        teamX                     : Indicate if teamX RC Connected. (type:uint8_t)
-        teamY                     : Indicate if teamY RC Connected. (type:uint8_t)
+        state                     : Indicate if RC Connected. (type:uint8_t)
 
         """
-        return MAVLink_state_rc_message(teamX, teamY)
+        return MAVLink_state_rc_message(state)
 
-    def state_rc_send(self, teamX: int, teamY: int, force_mavlink1: bool = False) -> None:
+    def state_rc_send(self, state: int, force_mavlink1: bool = False) -> None:
         """
         Indicate whether RC is connected.
 
-        teamX                     : Indicate if teamX RC Connected. (type:uint8_t)
-        teamY                     : Indicate if teamY RC Connected. (type:uint8_t)
+        state                     : Indicate if RC Connected. (type:uint8_t)
 
         """
-        self.send(self.state_rc_encode(teamX, teamY), force_mavlink1=force_mavlink1)
+        self.send(self.state_rc_encode(state), force_mavlink1=force_mavlink1)

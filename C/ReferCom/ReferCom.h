@@ -10,7 +10,7 @@
     #error Wrong include order: MAVLINK_REFERCOM.H MUST NOT BE DIRECTLY USED. Include mavlink.h from the same directory instead or set ALL AND EVERY defines from MAVLINK.H manually accordingly, including the #define MAVLINK_H call.
 #endif
 
-#define MAVLINK_REFERCOM_XML_HASH 6689732815456094178
+#define MAVLINK_REFERCOM_XML_HASH -7706864192925688548
 
 #ifdef __cplusplus
 extern "C" {
@@ -23,7 +23,7 @@ extern "C" {
 #endif
 
 #ifndef MAVLINK_MESSAGE_CRCS
-#define MAVLINK_MESSAGE_CRCS {{0, 36, 4, 4, 0, 0, 0}, {2, 217, 3, 3, 0, 0, 0}, {3, 244, 8, 8, 0, 0, 0}, {4, 22, 2, 2, 0, 0, 0}}
+#define MAVLINK_MESSAGE_CRCS {{0, 36, 4, 4, 0, 0, 0}, {2, 217, 3, 3, 0, 0, 0}, {3, 244, 8, 8, 0, 0, 0}, {4, 182, 1, 1, 0, 0, 0}}
 #endif
 
 #include "../protocol.h"
@@ -42,8 +42,7 @@ typedef enum REF_COMPONENT_ID
    REF_COMPONENT_ID_X_FEEDINGTBALE=2, /* Team X Feeding Table. | */
    REF_COMPONENT_ID_Y_FEEDINGTBALE=3, /* Team Y Feeding Table. | */
    REF_COMPONENT_ID_FISHPOND=4, /* Fish pond. | */
-   REF_COMPONENT_ID_RC=5, /* Remoter controller state. | */
-   REF_COMPONENT_ID_ENUM_END=6, /*  | */
+   REF_COMPONENT_ID_ENUM_END=5, /*  | */
 } REF_COMPONENT_ID;
 #endif
 
