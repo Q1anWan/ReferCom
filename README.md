@@ -40,7 +40,6 @@ Description: Creat this protocol
   | REF_COMPONENT_ID_X_FEEDINGTBALE | 2   | Team X Feeding Table. |
   | REF_COMPONENT_ID_Y_FEEDINGTBALE | 3   | Team Y Feeding Table. |
   | REF_COMPONENT_ID_FISHPOND       | 4   | Fish pond.         |
-  | REF_COMPONENT_ID_RC             | 5   | Remote controller message.         |
 
 - **REF_ERROR_CODE**   
   Error codes of component.
@@ -85,10 +84,10 @@ Description: Creat this protocol
 #### Overall
 | Name                 | Sender     | Receiver   | Trigger Condition                                                     | Description                     |
 | -------------------- | ---------- | ---------- | --------------------------------------------------------------------- | ------------------------------- |
-| server_heartbeat     | Server     | Components | Periodic.                                                             | Indicate server is alive.       |
+| server_heartbeat     | Server     | Components | Periodic. | Indicate server is alive.       |
 | set_component_state  | Server     | Components | Server actively send.                                                 | Set a new state of a component. |
 | component_heartbeat  | Components | Server     | After receiving a message from server or an error happened.           | Return status of component.     |
-| fishmonger_find_fish | Fishmonger | Server     | Periodic while fishmonger is at REF_FISHMONGER_STATE_TRIGGERED state. | Indicate the color the fish.    |
+| state_rc | Components | Server     | Periodic | Indicate if RC connected.    |
 
 
 #### Elaborate
@@ -128,16 +127,10 @@ Description: Creat this protocol
   Indicate fish man find a fish.   
   | Field      | Type     |       Enum       | Description                                                                                        |
   | ---------- | -------- | :--------------: | -------------------------------------------------------------------------------------------------- |
-  | teamX  | uint8_t  | \ | Indicate if team X RC Connected. |
-  | teamY  | uint8_t  |  \   | Indicate if team Y RC Connected. |
+  | state  | uint8_t  | \ | Indicate if  RC Connected. |
 
 ## Sample
 #### Logic
-- When server send a **server_heartbeat** 
-  1. Server send **server_heartbeat** 
-  2. Components return **component_heartbeat** after received **server_heartbeat**.
-  3. Components return **state_rc** after received **server_heartbeat**.
----
 
 - When server ask fishpond stop
   1. Server send **set_component_state** to fishpond with REF_FISHPOND_STATE_STOP.
@@ -176,7 +169,6 @@ Description: Creat this protocol
   1. Server send **set_component_state** to feeding table with REF_FEEDINGTABLE_STATE_RELEASE.
   2. Components return **component_heartbeat** with state REF_FEEDINGTABLE_STATE_RELEASE after received **set_component_state**.
   3. Components return **component_heartbeat** with REF_FEEDINGTABLE_STATE_NORMAL after cleaning.
-
 
 
 

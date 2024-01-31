@@ -22,9 +22,6 @@
 			<entry value="4" name="REF_COMPONENT_ID_FISHPOND">
 				<description>Fish pond.</description>
 			</entry>
-			<entry value="5" name="REF_COMPONENT_ID_RC">
-				<description>Remoter controller state.</description>
-			</entry>
 		</enum>
 		<!-- Error code -->
 		<enum name="REF_ERROR_CODE">
@@ -122,8 +119,7 @@
 		<!-- RC State -->
 		<message id="4" name="STATE_RC">
 			<description>Indicate whether RC is connected.</description>
-			<field type="uint8_t" name="teamX">Indicate if teamX RC Connected.</field>
-			<field type="uint8_t" name="teamY">Indicate if teamY RC Connected.</field>
+			<field type="uint8_t" name="state">Indicate if RC Connected.</field>
 		</message>
 	</messages>
 </mavlink>
